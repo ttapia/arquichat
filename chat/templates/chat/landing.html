@@ -1,0 +1,8 @@
+<h1 class="title">Welcome to arqui-chat</h1>
+
+<form action="{% url 'chat:login' %}" method="post">
+  {% csrf_token %}
+  <h4>Enter your username to start chatting!</h4>
+  <input type="text" name="username" id="username"/><br/>
+  <input type="submit" value="Enter"/>
+</form>

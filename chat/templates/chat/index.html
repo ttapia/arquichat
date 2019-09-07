@@ -1,0 +1,52 @@
+<h1>Latest messages in arqui-chat</h1>
+
+<form action="{% url 'chat:send' %}" method="post">
+  {% csrf_token %}
+  <h4>Send your own message!</h4>
+  <input type="text" name="messageText" id="messageText" autofocus/><br/>
+  <input type="submit" value="Send"/>
+</form>
+<form action="{% url 'chat:sendRandomFact' %}" method="post">
+  {% csrf_token %}
+  <input type="submit" value="Send Random Fact"/>
+</form>
+
+{% if messages %}
+  <ul>
+    {% for message in messages %}
+      <li>
+        <p>
+          {{ message.author }}
+          on
+          {{ message.pub_date }}:
+        </p>
+        <p>
+          {{ message.text }}
+        </p>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+<div class="pagination">
+  <span class="step-links">
+    {% if messages.has_previous %}
+      <a href="?page=1">&laquo; first</a>
+      <a href="?page={{ messages.previous_page_number }}">previous</a>
+    {% endif %}
+
+    <span class="current">
+      Page {{ messages.number }} of {{ messages.paginator.num_pages }}.
+    </span>
+
+    {% if messages.has_next %}
+      <a href="?page={{ messages.next_page_number }}">next</a>
+      <a href="?page={{ messages.paginator.num_pages }}">last &raquo;</a>
+    {% endif %}
+
+  </span>
+</div>
+
+<form action="{% url 'chat:logout' %}" method="get">
+  <input type="submit" value="Logout"/>
+</form>
